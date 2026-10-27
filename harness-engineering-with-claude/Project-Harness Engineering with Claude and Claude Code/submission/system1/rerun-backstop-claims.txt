@@ -1,0 +1,6 @@
+[claim_01_kitchen_fire] policy=POL-1001 expected=routed
+  → outcome=escalated turns=3 clarifications=0 tokens=9490/560 est=$0.0123
+total estimated cost: $0.0123
+[claim_07_tree_falls_on_car] policy=POL-1005 expected=routed
+  → outcome=routed turns=6 clarifications=1 tokens=21937/1011 est=$0.0270
+total estimated cost: $0.0270

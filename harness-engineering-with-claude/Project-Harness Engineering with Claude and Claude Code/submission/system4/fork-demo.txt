@@ -1,0 +1,5 @@
+base hot_state sha before forks: 110086f286fa
+fork data/forks/H1-lot-dielectric: hot_state sha 110086f286fa, own scratchpad lines 1
+fork data/forks/H2-night-shift-handling: hot_state sha 110086f286fa, own scratchpad lines 1
+base hot_state sha after forks:  110086f286fa
+main scratchpad lines: 1 -> 3 after merge_findings

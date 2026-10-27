@@ -1,0 +1,2 @@
+claim_01 probe: turns 3 terminal_called True
+FINAL TEXT: Perfect. Before I classify your claim, I need to get an estimate of the damage so I can assess the severity. Can you provide an estimate of the repair or replacement costs for the charred cabinets and smoke damage cleanup?

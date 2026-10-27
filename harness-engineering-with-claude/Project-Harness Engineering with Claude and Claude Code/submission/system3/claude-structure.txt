@@ -1,0 +1,11 @@
+$ find .claude CLAUDE.md -type f | sort
+.claude/commands/review.md
+.claude/rules/api.md
+.claude/rules/react.md
+.claude/rules/tests.md
+.claude/skills/deploy-check/SKILL.md
+.claude/standards/api.md
+.claude/standards/database.md
+.claude/standards/frontend.md
+.claude/standards/testing.md
+CLAUDE.md
