@@ -1,0 +1,9 @@
+claim_02 (sonnet) probe: turns 6 outcome routed
+FINAL TEXT: Your claim has been successfully submitted and routed to our **theft claims adjuster queue**! Here's a quick summary:
+
+- 📋 **Policy:** POL-1007 (Active)
+- 🚲 **Item:** 2024 commuter bike
+- 💰 **Estimated loss:** $800 | **Deductible:** $250
+- 📁 **Severity:** Low
+
+A theft adjuster will be in touch with you shortly to finalize the claim. In the meantime, if you haven't already, it's a good idea to **file a police report** — your adjuster may request it as part of the claims process. Take care, Blake!

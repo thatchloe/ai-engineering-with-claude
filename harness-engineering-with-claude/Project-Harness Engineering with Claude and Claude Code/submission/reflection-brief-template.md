@@ -9,7 +9,7 @@ Replace each `→` with your answer. **Every answer cites at least one artifact 
 
 - Model(s): `claude-haiku-4-5-20251001` for System 1 (`system1/run-20261027_204259/summary.md`) and System 2 (`retail_context/client.py` default). System 4 replayed a recorded `claude-sonnet-4-6` response (`fixtures/recorded_responses/shift_C_2026-04-30.json`). System 3 makes no API calls. The API was reached through the Udacity Vocareum proxy (`ANTHROPIC_BASE_URL=https://claude.vocareum.com`).
 - OS / Python: macOS 15.5 (Apple Silicon); Python 3.11 in a separate `.venv` per system.
-- Approx. API spend: ≈ $0.40 total. System 1 accounts for $0.1277 for the 8-claim run plus ≈ $0.05 for diagnostic reruns (`system1/rerun-backstop-claims.txt`, `system1/claim_01-final-text-probe.txt`). System 2 accounts for ≈ $0.20 on Haiku: 23.8k compression input tokens per `budget.json`, plus 8 eval calls of ≈ 16.8k input tokens each per `eval.jsonl` and `eval_control.jsonl`. System 4 ran offline at $0.
+- Approx. API spend: ≈ $0.85 total. System 1 accounts for $0.1277 for the 8-claim Haiku run, $0.3787 for the 8-claim Sonnet comparison run (`system1/model-comparison.md`), and ≈ $0.13 for diagnostic reruns (`system1/rerun-backstop-claims.txt`, `system1/claim_01-final-text-probe.txt`, `system1/claim_02-sonnet-final-text-probe.txt`). System 2 accounts for ≈ $0.20 on Haiku: 23.8k compression input tokens per `budget.json`, plus 8 eval calls of ≈ 16.8k input tokens each per `eval.jsonl` and `eval_control.jsonl`. System 4 ran offline at $0.
 
 **Evidence index**
 
@@ -125,3 +125,18 @@ Replace each `→` with your answer. **Every answer cites at least one artifact 
 
 20. **What you'd change.** One architectural decision you'd make differently, grounded in what you observed.
     → I'd widen System 1's clarification tool. `request_clarification` requires `ambiguity_between` with at least 2 claim types, so it only fits *type* ambiguity. A missing fact, such as `claim_01`'s damage estimate needed for severity, has no tool-shaped outlet. The model asked in prose and ended its turn, and the backstop escalated a claim that should have routed. That happened to 3 of the 7 claims expected to route in `summary.md`, and in my probe `claim_01` did it again. I'd add a `missing_fact` mode (or a separate `request_missing_fact` tool) and record the final assistant text in the trace when the backstop fires. The trace should show *why* the model stopped, not just that it did. That costs one schema change and turns a silent quality loss into a visible, fixable signal.
+
+---
+
+## Part 4 — Stand-out: same system, two models
+
+I re-ran System 1 with `--model claude-sonnet-4-6` (`system1/run-20261027_222418-sonnet/summary.md`). I compared it against the Haiku baseline (`system1/run-20261027_204259/summary.md`). The full table is in `system1/model-comparison.md`.
+
+| model | routed | escalated (all via backstop) | total turns | input tok | output tok | est. cost |
+|---|---|---|---|---|---|---|
+| haiku-4-5 | 4 | 4 | 29 | 99,479 | 5,637 | $0.1277 |
+| sonnet-4-6 | 3 | 5 | 28 | 97,798 | 5,689 | $0.3787 |
+
+The stronger model did **not** improve routing. Sonnet routed 3/8 claims against Haiku's 4/8. It lost `claim_02_stolen_bike`, which Haiku routed in 5 turns: Sonnet's trace is `tool_use → end_turn` after only `lookup_policy` and three `record_claim_fact` calls. Every escalation on both models came from the deterministic backstop, not from `escalate_to_human`. That includes `claim_06`, the claim designed to escalate, which matched its expected outcome only because the backstop caught it. The differences are within run-to-run noise. Rerunning `claim_02` on Sonnet routed it in 6 turns (`system1/claim_02-sonnet-final-text-probe.txt`), just as rerunning `claim_07` on Haiku did (`system1/rerun-backstop-claims.txt`).
+
+Token volume was almost identical, so the 2.97× cost gap ($0.3787 vs $0.1277) is essentially the 3× per-token price ratio in `claims_intake/pricing.py`. Sonnet also tended to gather more facts before routing: `claim_04` took 6 turns vs 5, and `claim_05` took 5 vs 4. That makes each routed claim pricier still. Swapping in a bigger model left the "ended without a terminal tool" failure in place. This supports Q15 and Q20: the reliable fix is in the harness (a code backstop, plus a tool path for missing facts), not in the model. For this workload Haiku is the right default.

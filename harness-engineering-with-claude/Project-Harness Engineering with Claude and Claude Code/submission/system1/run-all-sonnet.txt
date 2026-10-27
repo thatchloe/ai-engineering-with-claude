@@ -1,0 +1,19 @@
+run_dir: runs/20261027_222418
+[claim_01_kitchen_fire] policy=POL-1001 expected=routed
+  → outcome=escalated turns=2 clarifications=0 tokens=6291/444 est=$0.0255
+[claim_02_stolen_bike] policy=POL-1007 expected=routed
+  → outcome=escalated turns=2 clarifications=0 tokens=6052/367 est=$0.0237
+[claim_03_water_damage] policy=POL-1004 expected=routed
+  → outcome=escalated turns=2 clarifications=0 tokens=6017/400 est=$0.0241
+[claim_04_neighbor_injury] policy=POL-1002 expected=routed
+  → outcome=routed turns=6 clarifications=0 tokens=22430/1177 est=$0.0849
+[claim_05_auto_collision] policy=POL-1003 expected=routed
+  → outcome=routed turns=5 clarifications=0 tokens=19050/1056 est=$0.0730
+[claim_06_low_confidence_escalation] policy=POL-1008 expected=escalated
+  → outcome=escalated turns=3 clarifications=0 tokens=9700/669 est=$0.0391
+[claim_07_tree_falls_on_car] policy=POL-1005 expected=routed
+  → outcome=escalated turns=3 clarifications=0 tokens=9485/555 est=$0.0368
+[claim_08_minor_porch_damage] policy=POL-1006 expected=routed
+  → outcome=routed turns=5 clarifications=0 tokens=18773/1021 est=$0.0716
+summary: runs/20261027_222418/summary.md
+total estimated cost: $0.3787
