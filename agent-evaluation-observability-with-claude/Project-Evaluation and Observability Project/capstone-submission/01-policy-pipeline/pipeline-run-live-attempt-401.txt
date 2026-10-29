@@ -1,0 +1,42 @@
+$ .venv/bin/policy-extractor pipeline data/policies/ --routing-out routing_decisions.json --seed 42
+2026-10-29 17:46:50,997 INFO HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 401 Unauthorized"
+Traceback (most recent call last):
+  File "/Users/anh/Downloads/1793291737/Build a Validated, Routed Insurance Policy Extraction Pipeline/04-hitl-routing/solution/.venv/bin/policy-extractor", line 8, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/Users/anh/Downloads/1793291737/Build a Validated, Routed Insurance Policy Extraction Pipeline/04-hitl-routing/solution/policy_extractor/__main__.py", line 82, in main
+    return _cmd_pipeline(args)
+  File "/Users/anh/Downloads/1793291737/Build a Validated, Routed Insurance Policy Extraction Pipeline/04-hitl-routing/solution/policy_extractor/__main__.py", line 144, in _cmd_pipeline
+    outcome = extract_with_retry(
+        client=extractor_client, policy_id=pid, document_text=doc, max_retries=3,
+    )
+  File "/Users/anh/Downloads/1793291737/Build a Validated, Routed Insurance Policy Extraction Pipeline/04-hitl-routing/solution/policy_extractor/retry.py", line 48, in extract_with_retry
+    response = client.create(
+        model=model,
+    ...<4 lines>...
+        tool_choice={"type": "tool", "name": "extract_policy"},
+    )
+  File "/Users/anh/Downloads/1793291737/Build a Validated, Routed Insurance Policy Extraction Pipeline/04-hitl-routing/solution/policy_extractor/client.py", line 27, in create
+    result: Message = self._client.messages.create(**kwargs)
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/anh/Downloads/1793291737/Build a Validated, Routed Insurance Policy Extraction Pipeline/04-hitl-routing/solution/.venv/lib/python3.13/site-packages/anthropic/_utils/_utils.py", line 294, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/anh/Downloads/1793291737/Build a Validated, Routed Insurance Policy Extraction Pipeline/04-hitl-routing/solution/.venv/lib/python3.13/site-packages/anthropic/resources/messages/messages.py", line 1070, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/v1/messages",
+        ^^^^^^^^^^^^^^^
+    ...<30 lines>...
+        stream_cls=Stream[RawMessageStreamEvent],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/anh/Downloads/1793291737/Build a Validated, Routed Insurance Policy Extraction Pipeline/04-hitl-routing/solution/.venv/lib/python3.13/site-packages/anthropic/_base_client.py", line 1679, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/anh/Downloads/1793291737/Build a Validated, Routed Insurance Policy Extraction Pipeline/04-hitl-routing/solution/.venv/lib/python3.13/site-packages/anthropic/_base_client.py", line 1230, in request
+    return self._request(cast_to, options, stream=stream, stream_cls=stream_cls)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/anh/Downloads/1793291737/Build a Validated, Routed Insurance Policy Extraction Pipeline/04-hitl-routing/solution/.venv/lib/python3.13/site-packages/anthropic/_base_client.py", line 1333, in _request
+    raise self._make_status_error_from_response(response) from None
+anthropic.AuthenticationError: Error code: 401 - {'type': 'error', 'error': {'type': 'authentication_error', 'message': 'Invalid bearer token'}, 'request_id': 'req_011CgWsJv1PZQDkDxfkfVvuA'}

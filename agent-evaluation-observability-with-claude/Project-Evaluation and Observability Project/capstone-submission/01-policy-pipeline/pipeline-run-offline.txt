@@ -1,0 +1,32 @@
+# OFFLINE RECONSTRUCTION of the pipeline's post-model stages (no API access; live attempt = HTTP 401).
+# See header of offline_routing_run.py (copied into the evidence pack) for what is real vs scenario input.
+$ PYTHONPATH=. .venv/bin/python offline_routing_run.py   # spot_check_pct=0.2 seed=42
+POL-2025-001: shape=clean type=auto -> auto_approve  (all confidence at/above threshold, reviewer agrees, integration clean)
+POL-2025-002: shape=clean type=auto -> auto_approve  (all confidence at/above threshold, reviewer agrees, integration clean)
+POL-2025-003: shape=clean type=auto -> auto_approve  (all confidence at/above threshold, reviewer agrees, integration clean)
+POL-2025-004: shape=clean type=home -> auto_approve  (all confidence at/above threshold, reviewer agrees, integration clean)
+POL-2025-005: shape=clean type=home -> auto_approve  (all confidence at/above threshold, reviewer agrees, integration clean)
+POL-2025-006: shape=clean type=umbrella -> human_review  (reviewer_disagreement=['exclusions'])
+POL-2025-007: shape=clean type=umbrella -> auto_approve  (all confidence at/above threshold, reviewer agrees, integration clean)
+POL-2025-008: shape=clean type=other -> human_review  (fields_below_threshold=['policy_type'])
+POL-2025-009: shape=missing_endorsement_schedule -> RetryFutileEscalation (no routing decision)
+POL-2025-010: shape=inconsistent_premium type=home -> human_review  (integration_failure=['premium_matches_components_sum'])
+{
+  "decisions_written": 9,
+  "auto_approve": 3,
+  "human_review": 3,
+  "spot_check": 3,
+  "escalations": 1,
+  "pattern_summary": {
+    "endorsements_absent": {
+      "count": 1,
+      "policies": [
+        "POL-2025-009"
+      ],
+      "categories": [
+        "missing_source"
+      ]
+    }
+  },
+  "output_path": "routing_decisions.json"
+}

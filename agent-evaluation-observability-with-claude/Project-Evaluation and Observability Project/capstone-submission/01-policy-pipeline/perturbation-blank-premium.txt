@@ -1,0 +1,26 @@
+# Perturbation: copied data/policies/POL-2025-001.txt and replaced the premium figure
+#   '$ 1,847.62' -> '(see billing notice)' so the required field is genuinely absent
+# diff against the original:
+16c16
+<    Total Policy Premium ........................  $ 1,847.62
+---
+>    Total Policy Premium ........................  (see billing notice)
+$ PYTHONPATH=. .venv/bin/python perturb_retry.py <copy with premium blanked>
+
+--- A. unperturbed POL-2025-001, premium present ---
+api_calls=1  result=PolicyExtraction
+premium_amount=1847.62 retry_count=0 validation_history=[]
+
+--- B. PERTURBED copy, premium line blanked -> model returns premium_amount=null ---
+api_calls=1  result=RetryFutileEscalation
+{
+  "policy_id": "POL-2025-001",
+  "field": "premium_amount",
+  "category": "missing_source",
+  "detected_pattern": "premium_amount_absent",
+  "reason": "Field 'premium_amount' returned null \u2014 the source document does not contain this information. Retry is futile; escalate to human review."
+}
+
+--- C. contrast: unperturbed doc, model returns premium_amount=-1847.62 (format error) ---
+api_calls=2  result=PolicyExtraction
+premium_amount=1847.62 retry_count=1 validation_history=['negative_premium']

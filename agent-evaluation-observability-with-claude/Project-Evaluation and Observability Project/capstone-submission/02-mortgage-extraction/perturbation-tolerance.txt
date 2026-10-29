@@ -1,0 +1,9 @@
+# Perturbation: validator tolerance config, same replayed extraction
+$ .venv/bin/python perturb_tolerance.py fixtures/documents/income_sum_mismatch.txt
+document: fixtures/documents/income_sum_mismatch.txt
+stated_monthly_total=10892.17  base=5416.67 bonus=1250.0 commission=2140.0 overtime=385.5 other=450.0
+DEFAULT_TOLERANCE_USD = 1.0
+tolerance=     1.0: consistent=False discrepancies=[{"field": "total_monthly_income", "calculated": 9642.17, "stated": 10892.17, "delta": -1250.0}]
+tolerance= 1249.99: consistent=False discrepancies=[{"field": "total_monthly_income", "calculated": 9642.17, "stated": 10892.17, "delta": -1250.0}]
+tolerance=  1250.0: consistent=True discrepancies=[]
+tolerance=  2000.0: consistent=True discrepancies=[]

@@ -1,0 +1,18 @@
+Environment note
+================
+Date run: 2026-10-29
+OS: macOS 15.5 (build 24F74), arm64
+Python: Python 3.13.4
+
+Setup: one virtual environment per system, created from the final exercise's solution/ folder:
+  python3 -m venv .venv && .venv/bin/pip install -e ".[dev]"
+  - Build a Validated, Routed Insurance Policy Extraction Pipeline/04-hitl-routing/solution
+  - Build a Resilient Mortgage Document Extraction System/04-validate-mathematical-consistency/solution
+  - Investigate Supply Chain Risk with Multi-Source Synthesis/03-resilient-coordinator/solution
+
+Key package versions (policy venv):
+anthropic         2.3.0
+mypy              2.4.1
+pydantic          2.14.2
+pytest            9.2.0
+ruff              0.17.3

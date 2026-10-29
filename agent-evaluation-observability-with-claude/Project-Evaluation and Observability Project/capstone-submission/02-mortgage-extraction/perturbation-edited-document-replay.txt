@@ -1,0 +1,6 @@
+  File "/Users/anh/Downloads/1793291737/Build a Resilient Mortgage Document Extraction System/04-validate-mathematical-consistency/solution/mortgage_extractor/client.py", line 70, in call
+    raise FileNotFoundError(
+    ...<2 lines>...
+    )
+FileNotFoundError: No recorded response for key f2dac1d89cb945e2 (mode=replay). Re-run with mode='record' or 'auto' to populate the cache.
+[exit code: 1]
