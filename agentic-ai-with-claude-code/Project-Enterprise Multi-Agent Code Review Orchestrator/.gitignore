@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.env
+*.log
+logs/
+.DS_Store
+.vscode/
+.idea/
+coverage/
+*.tsbuildinfo
+.temp/
+
+# Keep Claude Skills in the submission (root .gitignore excludes .claude/)
+!.claude/
+!.claude/skills/
+!.claude/skills/**
